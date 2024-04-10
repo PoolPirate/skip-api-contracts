@@ -459,6 +459,10 @@ pub fn execute_post_swap_action(
         return Err(ContractError::ReceivedLessAssetFromSwapsThanMinAsset);
     }
 
+    response
+        .add_attribute("out_amount", transfer_out_asset.amount().to_string())
+        .add_attribute("out_denom", min_asset.denom());
+
     // Set the transfer out asset to the min asset if exact out is true
     let transfer_out_asset = if exact_out {
         min_asset
